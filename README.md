@@ -2,19 +2,24 @@
 자막 파일 이름 변경 스크립트.
 
 [Release] Animation Season 2 EP 01.mkv
+
 자막 애니 시즌 2 01화.smi
+
 이런 경우에 자막 파일의 이름이 동영상을 따라가도록 해 줍니다.
 
 #사용법
---------{.sh}
+~~~~~~~~{.sh}
 python ani_sub.py mkv smi
 #동영상 파일 확장자와 자막 파일 확장자를 순서대로 넣어주면 됩니다.
 #파일 이름은 동영상을 따라갑니다
---------
+~~~~~~~~
 
 #작동 원리
+
 [Release] Animation Season 2 EP 01.mkv ~ EP 25
+
 [Release] Animation Season 2 NCOP 01.mkv ~ NCOP 04
+
 자막 애니 시즌 2 01화.smi
 
 이 경우에 \d+ 의 형태로 서치를 합니다.
