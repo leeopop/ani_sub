@@ -1,8 +1,11 @@
 import re
 from pathlib import Path
 import collections
+import sys
+import getopt
 
 re_index = re.compile("\d+")
+
 
 class VItem:
     def __init__(self, file):
@@ -11,15 +14,20 @@ class VItem:
         self.found_pos = None
         self.found_num = None
 
-def process_video(root_dir, suffix):
-    video_list = []
+
+def extract_file_list(root_dir, suffix):
+    file_list = []
     for file in root_dir.iterdir():
         if not file.is_file():
             continue
         if file.suffix != suffix:
             continue
-        video_item = VItem(file = file)
-        video_list.append(video_item)
+        vitem = VItem(file = file)
+        file_list.append(vitem)
+    return file_list
+
+
+def process_file_list(video_list):
 
     while len(video_list) > 0:
         found_pos = []
@@ -51,13 +59,11 @@ def process_video(root_dir, suffix):
         for x in remove_list:
             video_list.remove(x)
         if len(dist_index) == len(video_list):
-            ret_list = list(map(lambda x: x.file, video_list))
-            ret_list.sort()
+            video_list.sort(key=lambda _x: _x.found_num)
+            ret_list = list(map(lambda _x: _x.file, video_list))
             return ret_list
     return None
 
-
-import sys, getopt
 
 def main(name, argv):
     video_suffix = None
@@ -78,8 +84,10 @@ def main(name, argv):
     if video_suffix is None or sub_suffix is None:
         print(name + " -v <video_suffix> -s <sub_suffix>")
         sys.exit(2)
-    video_list = process_video(Path("."), "." + video_suffix)
-    sub_list = process_video(Path("."), "." + sub_suffix)
+    video_list = process_file_list(
+            extract_file_list(Path("."), "." + video_suffix))
+    sub_list = process_file_list(
+            extract_file_list(Path("."), "." + sub_suffix))
     if len(video_list) != len(sub_list):
         print("number of sub and video are not equal")
 
