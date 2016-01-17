@@ -1,4 +1,5 @@
 # ani_sub
+[![Build Status](https://travis-ci.org/leeopop/ani_sub.svg?branch=master)](https://travis-ci.org/leeopop/ani_sub)
 자막 파일 이름 변경 스크립트.
 
 "[Release] Animation Season 2 EP 01.mkv"
